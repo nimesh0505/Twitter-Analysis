@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+
+  <title>Login Form</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
+      <link rel="stylesheet" href="static/style.css">
+    <script src="static/javascripts/fb_sdk.js"></script>
+<script src="static/javascripts/fb_login.js"></script>
+
+</head>
+
+<body>
+<form id="login-id" action="/" method="['POST,GET']">
+	<div id="signin">
+		<div class="form-title">
+			Login <br></br>
+			Analyse Your Tweets
+		<ul class="social-networks spin-icon">
+			   <li><a href="{{url_for('login')}}" class="icon-twitter"></a></li>
+		</ul>
+		</div>
+
+	</div>
+</form>
+</body>
+
+</html>

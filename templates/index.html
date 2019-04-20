@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home Page</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.button {
+  background-color: black;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.sidenav {
+  height: 100%;
+  width: 300px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color:  #C70039 ;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+th{
+padding:100px;
+}
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #f1f1f1;
+  display: block;
+}
+
+.main {
+  margin-left: 300px; /* Same as the width of the sidenav */
+  font-size: 28px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+.sidenav a:hover {
+  color: black;
+}
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 5px;}
+}
+</style>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+</head>
+<body>
+
+<div class="sidenav">
+  <a>Twitter Handler : {{ tw }}</a>
+  <a >Name : {{ name }}</a>
+  <a>Location : {{loc}}</a>
+  <a>Joined on : {{ join_date}}</a>
+  <a >Following : {{ following }}</a>
+  <a>Followers : {{ followers }}</a>
+  <a href="{{url_for('logout')}}" ><button class="button">Logout</button></a>
+</div>
+<div class="main">
+  <table>
+    <tr >
+      <th>
+        <h3>Sentiment Counts</h3>
+         <canvas id="chart1" width="300" height="300"></canvas>
+            <script>
+      // bar chart data
+      var barData = {
+        labels : [
+          {% for item in labels %}
+           "{{ item }}",
+          {% endfor %}
+	],
+        datasets : [{
+          fillColor: "rgba(251, 140, 0)",
+          borderColor:"rgba(0 ,0 ,0 )",
+          strokeColor: "rgba(241, 248, 233)",
+          pointColor: "rgba(151,187,205,1)",
+          data : [
+            {% for item in values %}
+               "{{ item }}",
+              {% endfor %}
+	    ]
+          }
+        ]
+      }
+     // get bar chart canvas
+     var mychart = document.getElementById("chart1").getContext("2d");
+       steps = 10
+       max = {{max}}
+     // draw bar chart
+    objBar =  new Chart(mychart).Bar(barData, {
+       scaleOverride: true,
+       scaleSteps: steps,
+       scaleStepWidth: Math.ceil(max / 10),
+       scaleStartValue: 0,
+       scaleShowVerticalLines: false,
+       scaleShowGridLines : false,
+       barShowStroke : true,
+       scaleShowLabels: true,
+
+       }
+     );
+
+    </script>
+      </th>
+      <th>
+        <h3>Top HashTags used</h3>
+        <canvas id="chart2" width="300" height="300"></canvas>
+
+      </th>
+    </tr>
+  </table>
+
+</div>
+
+</body>
+</html>
+
+
