@@ -4,8 +4,14 @@
   <title>Home Page</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 body {
-  font-family: "Lato", sans-serif;
+  font-family: 'Roboto',sans-serif;
+}
+html
+{
+ font-family: 'Roboto',sans-serif;
 }
 
 .button {
@@ -19,6 +25,18 @@ body {
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
+}
+
+h1 {
+	display: inline;
+	position: relative;
+	letter-spacing: -5px;
+	color: rgba(0,0,255,0.5);
+}
+
+h1:after {
+	position: absolute; left: 10px; top: 5px;
+	color: rgba(255,0,0,0.5);
 }
 
 .sidenav {
@@ -55,8 +73,16 @@ padding:100px;
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 5px;}
 }
+
+
+
+
 </style>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'>
+
+
+
+  </script>
 </head>
 <body>
 
@@ -75,6 +101,7 @@ padding:100px;
       <th>
         <h3>Sentiment Counts</h3>
          <canvas id="chart1" width="300" height="300"></canvas>
+
             <script>
       // bar chart data
       var barData = {
@@ -113,16 +140,87 @@ padding:100px;
 
        }
      );
-
     </script>
       </th>
+
       <th>
         <h3>Top HashTags used</h3>
-        <canvas id="chart2" width="300" height="300"></canvas>
 
+          <h1>
+            {% if htags.size!=0 %}
+            {% for i in htags %}
+              {{ i }}
+            {% endfor %}
+            {% endif %}
+          </h1>
       </th>
+<th>
+  <h3>Tweets vs Retweets </h3>
+<canvas id="chart" width="300" height="300"></canvas>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js'></script>
+  <script>
+
+    var ctx = document.getElementById('chart');
+
+var myChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Total Tweets'],
+    datasets: [
+      {
+        label: 'Self Tweets',
+        data: [{{ tt - retweets }}],
+        backgroundColor: "#4a148c",
+      },
+      {
+        label: 'Retweets',
+        data: [{{ retweets }}],
+        backgroundColor: "#aa00ff",
+      }
+    ]
+  },
+  options: {
+    scales: {
+      xAxes: [{ stacked: true ,
+      gridLines: {
+                display:false
+            },
+
+         }
+
+      ],
+      yAxes: [{ stacked: true ,
+          gridLines: {
+                display:false
+            },
+      },
+      ]
+    }
+  }
+});
+  </script>
+
+
+</th>
     </tr>
   </table>
+
+<h3 align="center" style = "color:black">Your Twitter Timeline </h3>
+        <div style="height:240px;width:98%;overflow:auto;padding:2%">
+
+          {% if tweets.size!=0 %}
+          {% for t in tweets %}
+            <h5 style="color:#581845">{{ t }}</h5>
+          <p>--------------------</p>
+
+          {% endfor %}
+          {% else %}
+          <h1>{{"You haven't Tweet "}}</h1>
+          {% endif %}
+
+        </div>
+
+
 
 </div>
 
