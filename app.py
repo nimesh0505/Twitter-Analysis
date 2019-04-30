@@ -89,7 +89,11 @@ def oauth_authorized(resp):
 	new_tweets = api.user_timeline(screen_name = resp['screen_name'],count=200, tweet_mode="extended")
 	twe=[]
 	l=[]
+	retweet_c = 0
 	for tweet in new_tweets:
+		if tweet.retweeted:
+			retweet_c = retweet_c + 1
+
 		twe.append(str(tweet.full_text))
 		ht=tweet.entities.get('hashtags')
 		myvalues = [i['text'] for i in ht if 'text' in i]
@@ -113,7 +117,7 @@ def oauth_authorized(resp):
 		top_hastag_count.append("#"+final_dict[0][1])
 		top_hastag_count.append("#"+final_dict[1][1])
 		top_hastag_count.append("#"+final_dict[2][1])
-		print(top_hastag,top_hastag_count)
+
 
 	pos_one,neg_one,neu_one = cal_sentiment(twe)
 	join_date = str(user.created_at)
@@ -134,7 +138,7 @@ def oauth_authorized(resp):
 	maxr = max(maxnu)
 
 
-	return render_template('index.html',join_date=join_date,tw=resp['screen_name'],loc=user.location,name=user.name,following=user.friends_count,followers=user.followers_count, max=(maxr+5), labels=labels, values=values)
+	return render_template('index.html',join_date=join_date,tw=resp['screen_name'],loc=user.location,name=user.name,following=user.friends_count,followers=user.followers_count, max=(maxr+5), labels=labels, values=values,htags=top_hastag_count,tweets=twe,retweets=retweet_c,tt=len(new_tweets))
 
 if __name__ == '__main__':
 	app.run()
