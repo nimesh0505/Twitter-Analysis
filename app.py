@@ -13,8 +13,8 @@ app.debug = DEBUG
 app.secret_key = SECRET_KEY
 oauth = OAuth()
 
-consumer_key='RZV6wuWdTLJR3Af6sCnSif3NX'
-consumer_secret='cXSEsK7eHZhUZYwpojVvNETgXw4Io7tUB6iUsY81wnrV73COHu'
+consumer_key='YOUR APP ID'
+consumer_secret='YOUR SECRET APP ID'
 
 twitter = oauth.remote_app('twitter',
 base_url='https://api.twitter.com/1/',
